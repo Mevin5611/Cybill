@@ -1,0 +1,76 @@
+{
+  "name": "Cybill",
+  "version": "1.0.0",
+  "description": "Cybill is a billing desktop application",
+  "private": true,
+  "main": "electron/main.cjs",
+  "scripts": {
+    "dev": "concurrently \"npm run dev --workspace=server\" \"npm run dev --workspace=client\"",
+    "dev:desktop": "concurrently -k \"npm run dev --workspace=server\" \"npm run dev --workspace=client\" \"npm run electron:dev\"",
+    "electron:dev": "wait-on http://localhost:5173 && electron .",
+    "build": "npm run build --workspace=client && npm run build --workspace=server",
+    "desktop": "electron .",
+    "dist": "npm run build && electron-builder --win",
+    "dist:dir": "npm run build && electron-builder --win --dir",
+    "test": "npm run test --workspace=client && npm run test --workspace=server",
+    "lint": "npm run lint --workspace=client && npm run lint --workspace=server"
+  },
+  "workspaces": [
+    "client",
+    "server"
+  ],
+  "devDependencies": {
+    "concurrently": "^9.2.5",
+    "electron": "^39.8.10",
+    "electron-builder": "^26.15.3",
+    "wait-on": "^8.0.5"
+  },
+  "build": {
+    "appId": "com.cybill.desktop",
+    "productName": "Cybill",
+    "icon": "build/icon.ico",
+    "directories": {
+      "output": "release",
+      "buildResources": "build"
+    },
+    "files": [
+      "electron/**/*",
+      "client/dist/**/*",
+      "server/dist/**/*",
+      "server/package.json",
+      "package.json",
+      "build/**/*",
+      "node_modules/**/*"
+    ],
+    "asarUnpack": [
+      "node_modules/pdfkit/**"
+    ],
+    "win": {
+      "icon": "build/icon.ico",
+      "target": [
+        "nsis"
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Cybill",
+      "installerIcon": "build/icon.ico",
+      "uninstallerIcon": "build/icon.ico",
+      "installerHeaderIcon": "build/icon.ico"
+    }
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.6",
+    "decimal.js": "^10.4.3",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^7.5.0",
+    "pdfkit": "^0.13.0",
+    "zod": "^3.22.4"
+  }
+}

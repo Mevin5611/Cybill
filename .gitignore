@@ -1,0 +1,18 @@
+# Dependencies (ignores root, client, server, etc.)
+node_modules/
+
+# Environment variables (ignores .env, .env.local, .env.production, etc.)
+.env
+.env.*
+
+# Build & Electron output folders
+dist/
+build/
+out/
+release/
+
+# Logs & OS files
+*.log
+npm-debug.log*
+.DS_Store
+Thumbs.db
